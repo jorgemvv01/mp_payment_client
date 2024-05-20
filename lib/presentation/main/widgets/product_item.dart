@@ -85,7 +85,11 @@ class ProductItem extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                Utils.getCurrencyFormat(product.price),
+                                Utils.getCurrencyFormat(
+                                product.price - (product.price * (product.discount/100)) + 
+                                (product.tax > 0 
+                                ? (product.tax/100) * (product.price - (product.price * (product.discount/100)))
+                                : 0 )),
                                 style: CustomTextStyles.paragraph(
                                   color: CustomColors.secundaryColor,
                                   isBold: true
