@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mp_payment_client/domain/business/model/business.dart';
 import 'package:mp_payment_client/domain/product/model/product.dart';
 import 'package:mp_payment_client/presentation/main/controllers/main_controller.dart';
 import 'package:mp_payment_client/presentation/store/controllers/store_controller.dart';
 import 'package:mp_payment_client/presentation/store/screens/store_screen.dart';
-import 'package:mp_payment_client/utils/api/api.dart';
 import 'package:mp_payment_client/utils/colors/custom_colors.dart';
 import 'package:mp_payment_client/utils/styles/custom_text_styles.dart';
 import 'package:mp_payment_client/utils/utils.dart';
@@ -24,9 +24,18 @@ class ProductItem extends StatelessWidget {
     return InkWell(
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
-      onTap: (){
-        Get.put(StoreController(
-          businessInfo: controller.business.firstWhere((b) => b.id == product.businessID))
+      onTap: () async{
+        Business business = controller.business.firstWhere((b) => b.id == product.businessID);
+        if(Get.isRegistered<StoreController>()) {
+          final storeController = Get.find<StoreController>();
+          storeController.businessInfo.id == business.id
+          ? storeController.productsCart.clear()
+          : await Get.delete<StoreController>();
+        }
+        Get.put(
+          StoreController(
+            businessInfo: business
+          )
         );
         Get.to(() => StoreScreen());
       },

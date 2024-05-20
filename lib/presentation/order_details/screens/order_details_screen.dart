@@ -244,38 +244,46 @@ class OrderDetailsScreen extends StatelessWidget {
                           ],
                         ),
                         const SizedBox(height: 10),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: ()async{
-                            mainController.mpInitPoint = order.mpInitPoint;          
-                            if(await InternetConnectionChecker().hasConnection){
-                              Get.to(() => MercadopagoScreen());
-                              return;
-                            }
-                            CustomAlerts.generalDialog(
-                              'Error',
-                              'No hay conexión a internet',
-                              onAcceptPressed: () => Get.close(1),
-                            );
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            height: 45,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: const Color(0xFF009ee3),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Pagar con Mercado Pago',
-                                style: CustomTextStyles.titleH4(
-                                  color: Colors.white
+                        order.mpInitPoint == ""
+                        ? Text(
+                            '''No se encontró preferencia de pago. Intente crear nuevamente el pedido.''',
+                            style: CustomTextStyles.titleH5(isBold: true, color: CustomColors.warningColor),
+                            maxLines: 2,
+                            textAlign: TextAlign.justify,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        : InkWell(
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: ()async{
+                              mainController.mpInitPoint = order.mpInitPoint;          
+                              if(await InternetConnectionChecker().hasConnection){
+                                Get.to(() => MercadopagoScreen());
+                                return;
+                              }
+                              CustomAlerts.generalDialog(
+                                'Error',
+                                'No hay conexión a internet',
+                                onAcceptPressed: () => Get.close(1),
+                              );
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              height: 45,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: const Color(0xFF009ee3),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Pagar con Mercado Pago',
+                                  style: CustomTextStyles.titleH4(
+                                    color: Colors.white
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
                       ],
                     ),
                 ),

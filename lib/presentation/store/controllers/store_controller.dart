@@ -45,10 +45,10 @@ class StoreController extends GetxController{
 
   String getProductQuantity(int productID){
     if(productsCart.keys.any((element) => element.id == productID)){
-      Product _p = productsCart.keys.firstWhere((element) => element.id == productID);
-      return productsCart[_p]! > 99
+      Product p = productsCart.keys.firstWhere((element) => element.id == productID);
+      return productsCart[p]! > 99
        ? '+99'
-       :  productsCart[_p].toString();
+       :  productsCart[p].toString();
     }
     return '0';
   }
