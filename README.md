@@ -63,4 +63,5 @@ lib/
 |- main.dart
 ```
 
-
+## Backend - REST API
+You can view and download the implementation of the REST API by clicking [here](https://github.com/jorgemvv01/payment_gateway_mercadopago).
